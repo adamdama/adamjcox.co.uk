@@ -208,31 +208,25 @@ CanvasState.prototype.getMouse = function(e)
 	my = e.pageY - offsetY;
 
 	// We return a simple javascript object (a hash) with x and y defined
-	return
-	{
+	//@formatter:off
+	return	{
 		x: mx,
 		y: my
 	};
+	//@formatter:on
 }
 // If you dont want to use <body onLoad='init()'>
 // You could uncomment this init() reference and place the script reference
 // inside the body tag
 //init();
 
-var options = 
+var options =
 {
-	colours:
-	[
-		'#FF0000',
-		'#FF6600',
-		'#FFFF00',
-		'#33CC00',
-		'#000099'
-	],
+	colours: ['#FF0000', '#FF6600', '#FFFF00', '#33CC00', '#000099'],
 	metrics:
 	{
-		x: 0,
-		y: 0,
+		x: 100,
+		y: 100,
 		w: 60,
 		h: 60
 	}
@@ -240,17 +234,16 @@ var options =
 
 var init = function()
 {
+	var m = options.metrics;
+	var c = options.colours
 	var s = new CanvasState(document.getElementById('colour_squares_canvas'));
-	
-	for(var i in options.colours)
+	var hex;
+	var x = m.x;
+
+	for (var i in c)
 	{
-		
+		s.addShape(new Shape(x, m.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
+		x += m.w;
+		console.log(s);
 	}
-	s.addShape(new Shape(40, 40, 50, 50));
-	// The default is gray
-	s.addShape(new Shape(60, 140, 40, 60, 'lightskyblue'));
-	// Lets make some partially transparent
-	s.addShape(new Shape(80, 150, 60, 30, 'rgba(127, 255, 212, .5)'));
-	s.addShape(new Shape(125, 80, 30, 80, 'rgba(245, 222, 179, .7)'));
-	
 }
