@@ -225,11 +225,19 @@ var options =
 	colours: ['#FF0000', '#FF6600', '#FFFF00', '#33CC00', '#000099'],
 	metrics:
 	{
-		x: 100,
-		y: 100,
-		w: 60,
-		h: 60
+		w: 70,
+		h: 20
 	}
+}
+
+var centerObject = function(areaW, areaH, objW, objH)
+{
+	//@formatter:off
+	return {
+		x: (areaW - objW) / 2,
+		y: (areaH - objH) / 2
+	}
+	//@formatter:on
 }
 
 var init = function()
@@ -238,12 +246,11 @@ var init = function()
 	var c = options.colours
 	var s = new CanvasState(document.getElementById('colour_squares_canvas'));
 	var hex;
-	var x = m.x;
-
+	var p = centerObject(s.canvas.width, s.canvas.height, m.w * c.length, m.h);
+	
 	for (var i in c)
 	{
-		s.addShape(new Shape(x, m.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
-		x += m.w;
-		console.log(s);
+		s.addShape(new Shape(p.x, p.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
+		p.x += m.w;
 	}
 }
