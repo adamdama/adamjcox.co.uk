@@ -221,19 +221,31 @@ CanvasState.prototype.getMouse = function(e)
 
 var options = 
 {
-	colours: ['#FF0000',
-				'#FF6600',
-				'#FFFF00',
-				'#33CC00',
-				'#000099'
-	]
+	colours:
+	[
+		'#FF0000',
+		'#FF6600',
+		'#FFFF00',
+		'#33CC00',
+		'#000099'
+	],
+	metrics:
+	{
+		x: 0,
+		y: 0,
+		w: 60,
+		h: 60
+	}
 }
 
 var init = function()
 {
 	var s = new CanvasState(document.getElementById('colour_squares_canvas'));
 	
-	
+	for(var i in options.colours)
+	{
+		
+	}
 	s.addShape(new Shape(40, 40, 50, 50));
 	// The default is gray
 	s.addShape(new Shape(60, 140, 40, 60, 'lightskyblue'));
