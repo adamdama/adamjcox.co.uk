@@ -2,7 +2,8 @@
 
  */
 
-$(document).ready(function(e) {
+$(document).ready(function(e)
+{
 	init();
 });
 
@@ -49,8 +50,10 @@ Hex.prototype.toRGB = function()
 
 // Constructor for Shape objects to hold data for all drawn objects.
 // For now they will just be defined as rectangles.
-function Shape(x, y, w, h, fill) {
-	// This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
+function Shape(x, y, w, h, fill)
+{
+	// This is a very simple and unsafe constructor. All we're doing is checking if
+	// the values exist.
 	this.x = x || 0;
 	this.y = y || 0;
 	this.w = w || 1;
@@ -59,17 +62,20 @@ function Shape(x, y, w, h, fill) {
 }
 
 // Draws this shape to a given context
-Shape.prototype.draw = function(ctx) {
+Shape.prototype.draw = function(ctx)
+{
 	ctx.fillStyle = this.fill;
 	ctx.fillRect(this.x, this.y, this.w, this.h);
 }
 // Determine if a point is inside the shape's bounds
-Shape.prototype.contains = function(mx, my) {
+Shape.prototype.contains = function(mx, my)
+{
 	// All we have to do is make sure the Mouse X,Y fall in the area between
 	// the shape's X and (X + Height) and its Y and (Y + Height)
 	return (this.x <= mx) && (this.x + this.w >= mx) && (this.y <= my) && (this.y + this.h >= my);
 }
-function CanvasState(canvas) {
+function CanvasState(canvas)
+{
 	// **** First some setup! ****
 
 	this.canvas = canvas;
@@ -79,13 +85,15 @@ function CanvasState(canvas) {
 	// This complicates things a little but but fixes mouse co-ordinate problems
 	// when there's a border or padding. See getMouse for more detail
 	var stylePaddingLeft, stylePaddingTop, styleBorderLeft, styleBorderTop;
-	if (document.defaultView && document.defaultView.getComputedStyle) {
+	if (document.defaultView && document.defaultView.getComputedStyle)
+	{
 		this.stylePaddingLeft = parseInt(document.defaultView.getComputedStyle(canvas, null)['paddingLeft'], 10) || 0;
 		this.stylePaddingTop = parseInt(document.defaultView.getComputedStyle(canvas, null)['paddingTop'], 10) || 0;
 		this.styleBorderLeft = parseInt(document.defaultView.getComputedStyle(canvas, null)['borderLeftWidth'], 10) || 0;
 		this.styleBorderTop = parseInt(document.defaultView.getComputedStyle(canvas, null)['borderTopWidth'], 10) || 0;
 	}
-	// Some pages have fixed-position bars (like the stumbleupon bar) at the top or left of the page
+	// Some pages have fixed-position bars (like the stumbleupon bar) at the top or
+	// left of the page
 	// They will mess up mouse coordinates and this fixes that
 	var html = document.body.parentNode;
 	this.htmlTop = html.offsetTop;
@@ -99,38 +107,47 @@ function CanvasState(canvas) {
 	// the collection of things to be drawn
 
 	// **** Then events! ****
-	window.addEventListener('resize', function(e) {
+	window.addEventListener('resize', function(e)
+	{
 		ctx.canvas.width = window.innerWidth;
 		ctx.canvas.height = window.innerHeight;
 	});
 
 	// This is an example of a closure!
-	// Right here "this" means the CanvasState. But we are making events on the Canvas itself,
-	// and when the events are fired on the canvas the variable "this" is going to mean the canvas!
-	// Since we still want to use this particular CanvasState in the events we have to save a reference to it.
+	// Right here "this" means the CanvasState. But we are making events on the
+	// Canvas itself,
+	// and when the events are fired on the canvas the variable "this" is going to
+	// mean the canvas!
+	// Since we still want to use this particular CanvasState in the events we have
+	// to save a reference to it.
 	// This is our reference!
 	var myState = this;
 
 	// **** Options! ****
 	this.interval = 30;
-	setInterval(function() {
+	setInterval(function()
+	{
 		myState.draw();
 	}, myState.interval);
 }
 
-CanvasState.prototype.addShape = function(shape) {
+CanvasState.prototype.addShape = function(shape)
+{
 	this.shapes.push(shape);
 	this.valid = false;
 }
 
-CanvasState.prototype.clear = function() {
+CanvasState.prototype.clear = function()
+{
 	this.ctx.clearRect(0, 0, this.width, this.height);
 }
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
-CanvasState.prototype.draw = function() {
+CanvasState.prototype.draw = function()
+{
 	// if our state is invalid, redraw and validate!
-	if (!this.valid) {
+	if (!this.valid)
+	{
 		var ctx = this.ctx;
 		var shapes = this.shapes;
 		this.clear();
@@ -139,7 +156,8 @@ CanvasState.prototype.draw = function() {
 
 		// draw all shapes
 		var l = shapes.length;
-		for (var i = 0; i < l; i++) {
+		for (var i = 0; i < l; i++)
+		{
 			var shape = shapes[i];
 			// We can skip the drawing of elements that have moved off the screen:
 			if (shape.x > this.width || shape.y > this.height || shape.x + shape.w < 0 || shape.y + shape.h < 0)
@@ -149,7 +167,8 @@ CanvasState.prototype.draw = function() {
 
 		// draw selection
 		// right now this is just a stroke along the edge of the selected Shape
-		if (this.selection != null) {
+		if (this.selection != null)
+		{
 			ctx.strokeStyle = this.selectionColor;
 			ctx.lineWidth = this.selectionWidth;
 			var mySel = this.selection;
@@ -161,17 +180,23 @@ CanvasState.prototype.draw = function() {
 		this.valid = true;
 	}
 }
-// Creates an object with x and y defined, set to the mouse position relative to the state's canvas
-// If you wanna be super-correct this can be tricky, we have to worry about padding and borders
-CanvasState.prototype.getMouse = function(e) {
+// Creates an object with x and y defined, set to the mouse position relative to
+// the state's canvas
+// If you wanna be super-correct this can be tricky, we have to worry about
+// padding and borders
+CanvasState.prototype.getMouse = function(e)
+{
 	var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
 
 	// Compute the total offset
-	if (element.offsetParent !== undefined) {
-		do {
+	if (element.offsetParent !== undefined)
+	{
+		do
+		{
 			offsetX += element.offsetLeft;
 			offsetY += element.offsetTop;
-		} while ((element = element.offsetParent));
+		}
+		while ((element = element.offsetParent));
 	}
 
 	// Add padding and border style widths to offset
@@ -183,16 +208,19 @@ CanvasState.prototype.getMouse = function(e) {
 	my = e.pageY - offsetY;
 
 	// We return a simple javascript object (a hash) with x and y defined
-	return {
-		x : mx,
-		y : my
+	return
+	{
+		x: mx,
+		y: my
 	};
 }
 // If you dont want to use <body onLoad='init()'>
-// You could uncomment this init() reference and place the script reference inside the body tag
+// You could uncomment this init() reference and place the script reference
+// inside the body tag
 //init();
 
-var init = function() {
+var init = function()
+{
 	var s = new CanvasState(document.getElementById('colour_squares_canvas'));
 	s.addShape(new Shape(40, 40, 50, 50));
 	// The default is gray
