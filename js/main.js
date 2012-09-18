@@ -154,6 +154,7 @@ CanvasState.prototype.draw = function()
 
 		// draw all shapes
 		var l = shapes.length;
+		
 		for (var i = 0; i < l; i++)
 		{
 			var shape = shapes[i];
@@ -283,6 +284,30 @@ var init = function()
 		s.addShape(new Shape(p.x, p.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
 		p.x += m.w;
 	}
+};
+
+var Animator = function(shape)
+{
+	this.shape = shape;
+};
+
+Animator.prototype.start = function(options)
+{
+	this.stop();
+	
+	
+		
+	this.loop = setInterval(this.iterator, this.time);
+};
+
+Animator.prototype.iterator = function()
+{
+	
+};
+
+Animator.prototype.stop = function()
+{
+	clearInterval(this.loop);
 };
 
 /*
