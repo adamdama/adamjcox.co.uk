@@ -92,6 +92,7 @@ function CanvasState(canvas)
 		this.styleBorderLeft = parseInt(document.defaultView.getComputedStyle(canvas, null)['borderLeftWidth'], 10) || 0;
 		this.styleBorderTop = parseInt(document.defaultView.getComputedStyle(canvas, null)['borderTopWidth'], 10) || 0;
 	}
+
 	// Some pages have fixed-position bars (like the stumbleupon bar) at the top or
 	// left of the page
 	// They will mess up mouse coordinates and this fixes that
@@ -100,18 +101,12 @@ function CanvasState(canvas)
 	this.htmlLeft = html.offsetLeft;
 
 	// **** Keep track of state! ****
-
 	this.valid = false;
 	// when set to false, the canvas will redraw everything
 	this.shapes = [];
 	// the collection of things to be drawn
 
 	// **** Then events! ****
-	window.addEventListener('resize', function(e)
-	{
-		ctx.canvas.width = window.innerWidth;
-		ctx.canvas.height = window.innerHeight;
-	});
 
 	// This is an example of a closure!
 	// Right here "this" means the CanvasState. But we are making events on the
@@ -215,6 +210,31 @@ CanvasState.prototype.getMouse = function(e)
 	};
 	//@formatter:on
 }
+
+CanvasState.prototype.fillWindow = function(hook)
+{
+
+	var canvas = this.canvas;
+	canvas.width = window.width;
+	canvas.height = window.height;
+
+	window.addEventListener('resize', function(e)
+	{
+		canvas.width = window.width;
+		canvas.height = window.height;
+
+		if (isFunction(hook))
+			hook();
+	});
+}
+function isFunction(functionToCheck)
+{
+	var getType =
+	{
+	};
+	return functionToCheck && getType.toString.call(functionToCheck) == '[object Function]';
+}
+
 // If you dont want to use <body onLoad='init()'>
 // You could uncomment this init() reference and place the script reference
 // inside the body tag
@@ -239,15 +259,16 @@ var centerObject = function(areaW, areaH, objW, objH)
 	}
 	//@formatter:on
 }
-
 var init = function()
 {
+	var hex;
 	var m = options.metrics;
 	var c = options.colours
 	var s = new CanvasState(document.getElementById('colour_squares_canvas'));
-	var hex;
 	var p = centerObject(s.canvas.width, s.canvas.height, m.w * c.length, m.h);
-	
+
+	s.fillWindow();
+
 	for (var i in c)
 	{
 		s.addShape(new Shape(p.x, p.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
@@ -255,13 +276,13 @@ var init = function()
 	}
 }
 /*
-var listen = function(elem, type, eventHandle) {
-    if (elem == null || elem == undefined) return;
-    if ( elem.addEventListener ) {
-        elem.addEventListener( type, eventHandle, false );
-    } else if ( elem.attachEvent ) {
-        elem.attachEvent( "on" + type, eventHandle );
-    } else {
-        elem["on"+type]=eventHandle;
-    }
-};*/
+ var listen = function(elem, type, eventHandle) {
+ if (elem == null || elem == undefined) return;
+ if ( elem.addEventListener ) {
+ elem.addEventListener( type, eventHandle, false );
+ } else if ( elem.attachEvent ) {
+ elem.attachEvent( "on" + type, eventHandle );
+ } else {
+ elem["on"+type]=eventHandle;
+ }
+ };*/
