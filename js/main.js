@@ -59,21 +59,23 @@ function Shape(x, y, w, h, fill)
 	this.w = w || 1;
 	this.h = h || 1;
 	this.fill = fill || '#AAAAAA';
-}
+};
 
 // Draws this shape to a given context
 Shape.prototype.draw = function(ctx)
 {
 	ctx.fillStyle = this.fill;
 	ctx.fillRect(this.x, this.y, this.w, this.h);
-}
+};
+
 // Determine if a point is inside the shape's bounds
 Shape.prototype.contains = function(mx, my)
 {
 	// All we have to do is make sure the Mouse X,Y fall in the area between
 	// the shape's X and (X + Height) and its Y and (Y + Height)
 	return (this.x <= mx) && (this.x + this.w >= mx) && (this.y <= my) && (this.y + this.h >= my);
-}
+};
+
 function CanvasState(canvas)
 {
 	// **** First some setup! ****
@@ -124,18 +126,19 @@ function CanvasState(canvas)
 	{
 		myState.draw();
 	}, myState.interval);
-}
+};
 
 CanvasState.prototype.addShape = function(shape)
 {
 	this.shapes.push(shape);
 	this.valid = false;
-}
+};
 
 CanvasState.prototype.clear = function()
 {
 	this.ctx.clearRect(0, 0, this.width, this.height);
-}
+};
+
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
 CanvasState.prototype.draw = function()
@@ -157,6 +160,7 @@ CanvasState.prototype.draw = function()
 			// We can skip the drawing of elements that have moved off the screen:
 			if (shape.x > this.width || shape.y > this.height || shape.x + shape.w < 0 || shape.y + shape.h < 0)
 				continue;
+				
 			shapes[i].draw(ctx);
 		}
 
@@ -174,7 +178,8 @@ CanvasState.prototype.draw = function()
 
 		this.valid = true;
 	}
-}
+};
+
 // Creates an object with x and y defined, set to the mouse position relative to
 // the state's canvas
 // If you wanna be super-correct this can be tricky, we have to worry about
@@ -209,31 +214,34 @@ CanvasState.prototype.getMouse = function(e)
 		y: my
 	};
 	//@formatter:on
-}
+};
 
 CanvasState.prototype.fillWindow = function(hook)
 {
-
+	var s = this;
 	var canvas = this.canvas;
-	canvas.width = window.width;
-	canvas.height = window.height;
+	canvas.width = $(window).width() + 1;
+	canvas.height = $(window).height() + 1;
 
 	window.addEventListener('resize', function(e)
 	{
-		canvas.width = window.width;
-		canvas.height = window.height;
+		canvas.width = $(window).width() + 1;
+		canvas.height = $(window).height() + 1;
+
+		s.valid = false;
 
 		if (isFunction(hook))
 			hook();
 	});
-}
+};
+
 function isFunction(functionToCheck)
 {
-	var getType =
-	{
-	};
+	//@formatter:off
+	var getType = {};
+	//@formatter:on
 	return functionToCheck && getType.toString.call(functionToCheck) == '[object Function]';
-}
+};
 
 // If you dont want to use <body onLoad='init()'>
 // You could uncomment this init() reference and place the script reference
@@ -248,7 +256,7 @@ var options =
 		w: 70,
 		h: 20
 	}
-}
+};
 
 var centerObject = function(areaW, areaH, objW, objH)
 {
@@ -258,7 +266,8 @@ var centerObject = function(areaW, areaH, objW, objH)
 		y: (areaH - objH) / 2
 	}
 	//@formatter:on
-}
+};
+
 var init = function()
 {
 	var hex;
@@ -274,7 +283,8 @@ var init = function()
 		s.addShape(new Shape(p.x, p.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
 		p.x += m.w;
 	}
-}
+};
+
 /*
  var listen = function(elem, type, eventHandle) {
  if (elem == null || elem == undefined) return;

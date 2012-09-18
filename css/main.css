@@ -698,6 +698,20 @@ td {
 
 
 /* Adam J Cox */
+html,
+body
+{
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+canvas
+{
+	border: none;
+position: absolute;
+}
+
 #colour_squares_canvas
 {
 	background: #000000;
