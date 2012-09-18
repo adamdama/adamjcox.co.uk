@@ -286,18 +286,27 @@ var init = function()
 	}
 };
 
-var Animator = function(shape)
+var Animator = function(target)
 {
-	this.shape = shape;
+	this.target = target;
 };
 
-Animator.prototype.start = function(options)
+Animator.prototype.start = function(props, iterations, duration)
 {
 	this.stop();
 	
+	this.intiterations = iterations;	
+	this.duration = props;	
+	this.props = props;	
 	
+	this.originalProps = new Object();
+	
+	for(var i in props)
+		this.originalProps[props[i]] = this.target[props[i]];
 		
-	this.loop = setInterval(this.iterator, this.time);
+	console.log(this.originalProps);
+		
+	this.loop = setInterval(this.iterator, this.interval);
 };
 
 Animator.prototype.iterator = function()
