@@ -287,12 +287,13 @@ var init = function()
 		p.x += m.w;
 	}
 	
-	var a = new Animator(shp);
-	a.start({h: 200}, 100, 1000);
+	var a = new Animator(s, shp);
+	a.start({h: 200}, 100, 5000);
 };
 
-var Animator = function(target)
+var Animator = function(canvas, target)
 {
+	this.canvas = canvas;
 	this.target = target;
 };
 
@@ -330,7 +331,7 @@ Animator.prototype.iterator = function(animator)
 	
 	console.log(animator.target);
 	
-	this.valid = false;
+	animator.canvas.valid = false;
 	
 	if(animator.iterations == 0)
 		animator.stop();
