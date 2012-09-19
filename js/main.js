@@ -132,6 +132,8 @@ CanvasState.prototype.addShape = function(shape)
 {
 	this.shapes.push(shape);
 	this.valid = false;
+	
+	return shape;
 };
 
 CanvasState.prototype.clear = function()
@@ -271,7 +273,7 @@ var centerObject = function(areaW, areaH, objW, objH)
 
 var init = function()
 {
-	var hex;
+	var hex, shp;
 	var m = options.metrics;
 	var c = options.colours
 	var s = new CanvasState(document.getElementById('colour_squares_canvas'));
@@ -281,9 +283,12 @@ var init = function()
 
 	for (var i in c)
 	{
-		s.addShape(new Shape(p.x, p.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
+		shp = s.addShape(new Shape(p.x, p.y, m.w, m.h, 'rgba(' + new Hex(c[i]).toRGB() + ',1)'));
 		p.x += m.w;
 	}
+	
+	var a = new Animator(shp);
+	a.start({h: 200}, 100, 1000);
 };
 
 var Animator = function(target)
@@ -295,27 +300,45 @@ Animator.prototype.start = function(props, iterations, duration)
 {
 	this.stop();
 	
-	this.intiterations = iterations;	
-	this.duration = props;	
+	this.iterations = iterations;	
+	this.duration = duration;	
 	this.props = props;	
+	this.interval = duration / iterations;
 	
 	this.originalProps = new Object();
 	
 	for(var i in props)
-		this.originalProps[props[i]] = this.target[props[i]];
+		this.originalProps[i] = this.target[i];
 		
-	console.log(this.originalProps);
-		
-	this.loop = setInterval(this.iterator, this.interval);
+	this.loop = setInterval(this.iterator, this.interval, this);
 };
 
-Animator.prototype.iterator = function()
+Animator.prototype.iterator = function(animator)
 {
+	var p = animator.props;
 	
+	for(var i in p)
+	{
+		var val = p[i] || 0;
+		var newVal = animator.target[i];		
+		var diff = val - newVal;
+		
+		animator.target[i] += diff / animator.iterations;
+		
+		animator.iterations--;
+	}
+	
+	console.log(animator.target);
+	
+	this.valid = false;
+	
+	if(animator.iterations == 0)
+		animator.stop();
 };
 
 Animator.prototype.stop = function()
 {
+	this.originalProps = null;
 	clearInterval(this.loop);
 };
 
