@@ -3,6 +3,11 @@
  * @author Adam Cox adamdama@hotmail.com
  */
 
+@import "compass/css3/text-shadow";
+@import "compass/css3/images";
+@import "compass/css3/inline-block";
+@import "compass/css3/box-shadow";
+
 /**
  * Import Icon images as spritesheet
  */
@@ -31,41 +36,65 @@
  * font-family: 'Tulpen One', cursive;
  */
 
-header {
-	font-size: 24px;
-	&.site {
-		height: 100px;
-		width: 100%;
+*:selection {
+	color: #999999;
+}
 
-		.title {
-			float: left;
-			margin-left: 30%;
-			/* Text */
-			font-size: 70px;
-			text-transform: uppercase;
+a {
+	font-weight: bold;
+	color: inherit;
+	text-decoration: none;
+
+	&:visited {
+		@extend a;
+	}
+
+	&:hover {
+
+	}
+}
+
+header {
+	&.site {
+		height: 55px;
+		width: 100%;
+		padding: 15px 0px 0px 15px;
+		font-size: 1.8em;
+		text-transform: uppercase;
 			color: #222;
-			text-shadow: 1px 1px 1px #DDD;
+		@include text-shadow(1px 1px 1px #DDD);
+		border-bottom: 2px solid #2f2f2f;
+	}
+}
+
+nav	{
+	width: auto;
+	@include inline-block(none);
+	@include box-shadow;
+
+	li {
+		height: 30px;
+		width: 160px;
+		padding: 15px;
+		position: relative;
+
+		background-color: #f9f9f9;
+		@include background-image(linear-gradient(top, #5e5e5e, #262626));
+		border: 1px 0 solid #2f2f2f;
+		color: #e9e9e9;
+		font-size: 20px;
+		text-align: right;
+
+		a	{
+			@include block100;
 		}
 
-		nav	{
-			float: right;
-
-			li {
-				@include sq(256px);
-				text-align: center;
-				position: relative;
-
-				a	{
-					@include block100;
-
-					span {
-						position: absolute;
-						bottom: 0;
-						left: 0;
-						right: 0;
-					}
-				}
-			}
+		span {
+			@include block100;
 		}
 	}
+}
+
+#content {
+	@include inline-block(top);
 }
