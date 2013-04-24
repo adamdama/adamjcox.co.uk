@@ -7,7 +7,7 @@
  * Import Icon images as spritesheet
  */
 
-@import "icons /*.png";
+@import "icons/*.png";
 @include all-icons-sprites;
 
 /**
@@ -31,16 +31,13 @@
  * font-family: 'Tulpen One', cursive;
  */
 
-header
-{
+header {
 	font-size: 24px;
-	&.site
-	{
+	&.site {
 		height: 100px;
 		width: 100%;
 
-		.title
-		{
+		.title {
 			float: left;
 			margin-left: 30%;
 			/* Text */
@@ -50,22 +47,23 @@ header
 			text-shadow: 1px 1px 1px #DDD;
 		}
 
-		nav
-		{
+		nav	{
 			float: right;
 
-			li
-			{
+			li {
 				@include sq(256px);
 				text-align: center;
 				position: relative;
 
-				span
-				{
-					position: absolute;
-					bottom: 0;
-					left: 0;
-					right: 0;
+				a	{
+					@include block100;
+
+					span {
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						right: 0;
+					}
 				}
 			}
 		}
