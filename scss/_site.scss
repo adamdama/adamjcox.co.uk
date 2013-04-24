@@ -1,6 +1,31 @@
-/* START adamjcox.co.uk */
+/**
+ * adamjcox.co.uk
+ * @author Adam Cox adamdama@hotmail.com
+ */
 
-/*
+/**
+ * Import Icon images as spritesheet
+ */
+
+@import "icons /*.png";
+@include all-icons-sprites;
+
+/**
+ * Mixins
+ */
+
+@mixin block100 {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+@mixin sq($l) {
+	width: $l;
+	height: $l;
+}
+
+/**
  * Fonts:
  * font-family: 'Sarina', cursive;
  * font-family: 'Tulpen One', cursive;
@@ -28,7 +53,21 @@ header
 		nav
 		{
 			float: right;
-			margin-right: 30%;
+
+			li
+			{
+				@include sq(256px);
+				text-align: center;
+				position: relative;
+
+				span
+				{
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+				}
+			}
 		}
 	}
 }
