@@ -1,0 +1,34 @@
+/* START adamjcox.co.uk */
+
+/*
+ * Fonts:
+ * font-family: 'Sarina', cursive;
+ * font-family: 'Tulpen One', cursive;
+ */
+
+header
+{
+	font-size: 24px;
+	&.site
+	{
+		height: 100px;
+		width: 100%;
+
+		.title
+		{
+			float: left;
+			margin-left: 30%;
+			/* Text */
+			font-size: 70px;
+			text-transform: uppercase;
+			color: #222;
+			text-shadow: 1px 1px 1px #DDD;
+		}
+
+		nav
+		{
+			float: right;
+			margin-right: 30%;
+		}
+	}
+}
