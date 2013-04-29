@@ -54,6 +54,10 @@ a {
 	}
 }
 
+body {
+	background-image: url('../img/texture.jpg');
+}
+
 header {
 	&.site {
 		height: 55px;
@@ -75,7 +79,7 @@ nav	{
 	width: auto;
 	position: relative;
 	z-index: 4;
-	@include inline-block(none);
+	float: left;
 
 	@include box-shadow(10px -6px 80px 10px #444);
 
@@ -104,5 +108,18 @@ nav	{
 }
 
 #content {
-	@include inline-block(top);
+	position: relative;
+	overflow: hidden;
+	border: 2px solid #111111;
+
+	> div {
+		display: none;
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		&.active {
+			display: block;
+		}
+	}
 }
