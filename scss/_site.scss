@@ -32,6 +32,11 @@
 }
 
 /**
+ * Variables
+ */
+$headerHeight: 55px;
+
+/**
  * Fonts:
  * font-family: 'Sarina', cursive;
  * font-family: 'Tulpen One', cursive;
@@ -72,7 +77,7 @@ body {
 
 	header {
 		&.site {
-			height: 55px;
+			height: $headerHeight;
 			position: relative;
 			z-index: 5;
 			float: left;
@@ -83,11 +88,16 @@ body {
 			color: #222;
 			@include text-shadow(1px 1px 1px #DDD);
 			border-bottom: 2px solid #2f2f2f;
-			background-color: #d7d7d7;
+			background-color: #141414;
 		}
 	}
 
 	#nav	{
+		position: absolute;
+		top: $headerHeight;
+		bottom: 0;
+		left: 0;
+		right: $navWidth;
 		width: auto;
 		z-index: 4;
 		float: left;
@@ -96,9 +106,6 @@ body {
 
 		.nav-border {
 			height: 100%;
-			@include box-shadow(inset -7px 8px 30px -6px #333333);
-			@include border-radius(8px, 8px);
-			border: 4px solid #111111;
 		}
 
 		li {
@@ -107,9 +114,8 @@ body {
 			padding: 15px;
 			position: relative;
 
-			background-color: #111111;
-			@include box-shadow(inset -7px 8px 30px -6px #333333);
-			@include background-image(linear-gradient(top, #191919, #262626));
+			background-color: #141414 ;
+			@include background-image(linear-gradient(bottom, #141414 35%, #4F4F4F 68%));
 			border-bottom: 2px solid #222;
 			color: #e9e9e9;
 			font-size: 20px;
