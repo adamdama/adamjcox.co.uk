@@ -40,8 +40,9 @@ $navWidth: 320px;
 
 /**
  * Fonts:
- * font-family: 'Sarina', cursive;
- * font-family: 'Tulpen One', cursive;
+ * font-family: 'Noto Sans', sans-serif;
+ * font-family: 'Sintony', sans-serif;
+ * font-family: 'Days One', sans-serif;
  */
 
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700);
@@ -106,7 +107,7 @@ body {
 				display: block;
 				float: left;
 				@include sq(32px);
-				margin: 10px 0 0 10px;
+				margin: 15px 0 0 10px;
 
 				&.github-32 {
 					background: sprite($icons, github-32) no-repeat;
