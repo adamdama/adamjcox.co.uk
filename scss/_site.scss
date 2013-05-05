@@ -147,13 +147,17 @@ body {
 				@include background-image(linear-gradient(to bottom, #f0f0f0 30%,#b4b4b4 100%));
 				border-bottom: 1px solid #464646;
 
-				span {
-					display: block;
+				a {
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
 					padding-right: 30px;
 				}
 
 				&.active {
-					span:after {
+					a:after {
 						content: '';
 						border-color: transparent white;
 						border-style: solid;
