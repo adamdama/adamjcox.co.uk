@@ -3,18 +3,25 @@
  * @author Adam Cox adamdama@hotmail.com
  */
 
-@import "compass/css3/text-shadow";
+/**
+ * Config
+ */
+$support-for-original-webkit-gradients : false;
+
 @import "compass/css3/images";
-@import "compass/css3/inline-block";
-@import "compass/css3/box-shadow";
-@import "compass/css3/border-radius";
 
 /**
  * Import Icon images as spritesheet
  */
 
-@import "icons/*.png";
-@include all-icons-sprites;
+$icons: sprite-map("icons/*.png"); // contains icons/new.png among others.
+
+/**
+ * Variables
+ */
+$headerHeight: 60px;
+$tabHeight: 60px;
+$navWidth: 320px;
 
 /**
  * Mixins
@@ -32,15 +39,14 @@
 }
 
 /**
- * Variables
- */
-$headerHeight: 55px;
-
-/**
  * Fonts:
  * font-family: 'Sarina', cursive;
  * font-family: 'Tulpen One', cursive;
  */
+
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Sintony);
+@import url(http://fonts.googleapis.com/css?family=Days+One);
 
 *:selection {
 	color: #999999;
@@ -65,83 +71,132 @@ html {
 }
 
 body {
-	@extend html;
-	background-image: url('../img/texture.jpg');
+	@include sq(100%);
 	position: relative;
+	font-family: 'Noto Sans', sans-serif;
 }
 
 #container {
-	height: auto;
-	min-height: 100%;
+	height: 100%;
 	position: relative;
 
-	header {
-		&.site {
-			height: $headerHeight;
-			position: relative;
-			z-index: 5;
-			float: left;
-			width: 100%;
-
-			font-size: 1.8em;
-			text-transform: uppercase;
-			color: #222;
-			@include text-shadow(1px 1px 1px #DDD);
-			border-bottom: 2px solid #2f2f2f;
-			background-color: #141414;
-		}
-	}
-
 	#nav	{
+		width: $navWidth;
+		height: 100%;
 		position: absolute;
-		top: $headerHeight;
-		bottom: 0;
-		left: 0;
-		right: $navWidth;
-		width: auto;
-		z-index: 4;
-		float: left;
 
-		@include box-shadow(10px -6px 80px 10px #444);
+		text-align: right;
+		background-color: #C8C8C8;
 
-		.nav-border {
-			height: 100%;
-		}
+		header {
+			height: $headerHeight;
+			padding-right: 17px;
+			font-family: 'Days One', sans-serif;
 
-		li {
-			height: 30px;
-			width: 160px;
-			padding: 15px;
-			position: relative;
-
-			background-color: #141414 ;
-			@include background-image(linear-gradient(bottom, #141414 35%, #4F4F4F 68%));
-			border-bottom: 2px solid #222;
-			color: #e9e9e9;
-			font-size: 20px;
-			text-align: right;
+			font-size: 30px;
+			line-height: $headerHeight;
+			background-color: #F5F5F5;
+			border-bottom: 1px solid #464646;
 
 			a	{
 				@include block100;
 			}
 
-			span {
-				@include block100;
+			.icon {
+				display: block;
+				float: left;
+				@include sq(32px);
+				margin: 10px 0 0 10px;
+
+				&.github-32 {
+					background: sprite($icons, github-32) no-repeat;
+				}
+
+				&.linkedin-32 {
+					background: sprite($icons, linkedin-32) no-repeat;
+				}
+
+				&.twitter-32 {
+					background: sprite($icons, twitter-32) no-repeat;
+				}
+			}
+		}
+
+		.nav-border {
+			position: fixed;
+			top: 0;
+			left: $navWidth - 4px;
+			width: 4px;
+			height: 100%;
+
+			border-left: 1px solid #464646;
+			border-right: 1px solid #464646;
+			@include background-image(linear-gradient(to right, #f0f0f0 30%,#b4b4b4 100%));
+		}
+
+		nav{
+			li {
+				height: $tabHeight;
+				width: 100%;
+				position: relative;
+
+				font-family: 'Sintony', sans-serif;
+				font-size: 14px;
+				line-height: $tabHeight;
+				@include background-image(linear-gradient(to bottom, #f0f0f0 30%,#b4b4b4 100%));
+				border-bottom: 1px solid #464646;
+
+				span {
+					display: block;
+					padding-right: 30px;
+				}
+
+				&.active {
+					span:after {
+						content: '';
+						border-color: transparent white;
+						border-style: solid;
+						border-width: 30px 30px 30px 0px;
+						height: 0px;
+						width: 0px;
+						position: absolute;
+						top: 0;
+						right: -4px;
+						z-index:  100;
+						display: block;
+						-webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+						filter:url(../img/svg/shadow.svg#drop-shadow);
+						-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=90, Color='rgba(0,0,0,0.3)')";
+						filter:progid:DXImageTransform.Microsoft.Shadow(Strength=5,Direction=90,Color='rgba(0,0,0,0.3)');
+					}
+				}
 			}
 		}
 	}
 
 	#content {
-		overflow: hidden;
-		border: 4px solid #111111;
-		z-index: 10;
-		@include border-radius(8px, 8px);
+		height: 100%;
+		margin-left: $navWidth + 2px;
+		position: relative;
+		z-index: 200;
+
+		background: #ffffff;
+
+		h1 {
+			font-size: 24px;
+			margin: 0;
+			padding: 0;
+
+			font-family: 'Sintony', sans-serif;
+			border-bottom: 1px solid #464646;
+			line-height: 46px;
+		}
 
 		> div {
 			display: none;
 			position: relative;
-			height: 100%;
-			background: #f7f7f7;
+			max-width: 700px;
+			padding: 15px;
 
 			&.active {
 				display: block;
