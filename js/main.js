@@ -13,6 +13,35 @@ if (!(window.console && console.log)) {
 	}());
 }
 
+// Site code
+$(function(){
+	// get the navigation and add click handler to the links
+
+	var $nav = $('#nav'),
+		$navItems = $nav.find('li'),
+		$content = $('#content'),
+		$contentItems = $content.children('div');
+
+	$nav.find('a').on('click', function(e){
+		e.preventDefault();
+
+		var $this = $(this),
+			index = $this.closest('li').index(),
+			href = $this.attr('href'),
+			path = href.replace(this.baseURI, ''),
+			ext = href.lastIndexOf('.'),
+			page = path.substr(0, ext >= 0 ? ext : path.length);
+
+		$navItems.removeClass('active')
+			.eq(index)
+			.addClass('active');
+
+		$contentItems.removeClass('active')
+			.filter('[data-name="'+page+'"]')
+			.addClass('active');
+	});
+});
+
 // Google Analytics
 /*var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
 (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
