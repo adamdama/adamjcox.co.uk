@@ -24,6 +24,7 @@ $icons: sprite-map("icons/*.png"); // contains icons/new.png among others.
 $headerHeight: 60px;
 $tabHeight: 60px;
 $navWidth: 320px;
+$navBorder: 4px;
 
 /**
  * Mixins
@@ -130,8 +131,8 @@ body {
 		.nav-border {
 			position: fixed;
 			top: 0;
-			left: $navWidth - 4px;
-			width: 4px;
+			left: $navWidth;
+			width: $navBorder;
 			height: 100%;
 
 			border-left: 1px solid #464646;
@@ -139,7 +140,9 @@ body {
 			@include background-image(linear-gradient(to right, #f0f0f0 30%,#b4b4b4 100%));
 		}
 
-		nav{
+		.nav-inner {
+			z-index: 10;
+
 			li {
 				height: $tabHeight;
 				width: 100%;
@@ -170,7 +173,7 @@ body {
 						width: 0px;
 						position: absolute;
 						top: 0;
-						right: -4px;
+						right: -6px;
 						z-index:  100;
 						display: block;
 						-webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
@@ -186,7 +189,7 @@ body {
 	#content {
 		height: auto;
 		min-height: 100%;
-		margin-left: $navWidth + 2px;
+		margin-left: $navWidth + $navBorder + 2px;
 		position: relative;
 		z-index: 200;
 
