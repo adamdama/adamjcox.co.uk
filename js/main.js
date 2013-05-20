@@ -15,31 +15,72 @@ if (!(window.console && console.log)) {
 
 // Site code
 $(function(){
-	// get the navigation and add click handler to the links
+	var $window,
+		$nav,
+		$navInner,
+		$navItems,
+		$content,
+		$contentItems;
 
-	var $nav = $('#nav'),
-		$navItems = $nav.find('li'),
-		$content = $('#content'),
+	var init = function(){
+		$window = $(window);
+		$nav = $('#nav');
+		$navInner = $nav.children('.nav-inner');
+		$navItems = $nav.find('li');
+		$content = $('#content');
 		$contentItems = $content.children('div');
 
-	$nav.find('a').on('click', function(e){
-		e.preventDefault();
+		fixNavigationPosition();
+		activateNavigation();
+	};
 
-		var $this = $(this),
-			index = $this.closest('li').index(),
-			href = $this.attr('href'),
-			path = href.replace(this.baseURI, ''),
-			ext = href.lastIndexOf('.'),
-			page = path.substr(0, ext >= 0 ? ext : path.length);
+	var activateNavigation = function(){
+		// get the navigation and add click handler to the links
+		$nav.find('a').on('click', function(e){
+			e.preventDefault();
 
-		$navItems.removeClass('active')
-			.eq(index)
-			.addClass('active');
+			var $this = $(this),
+				index = $this.closest('li').index(),
+				href = $this.attr('href'),
+				path = href.replace(this.baseURI, ''),
+				ext = href.lastIndexOf('.'),
+				page = path.substr(0, ext >= 0 ? ext : path.length);
 
-		$contentItems.removeClass('active')
-			.filter('[data-name="'+page+'"]')
-			.addClass('active');
-	});
+			$navItems.removeClass('active')
+				.eq(index)
+				.addClass('active');
+
+			$contentItems.removeClass('active')
+				.filter('[data-name="'+page+'"]')
+				.addClass('active');
+		});
+	};
+
+	var fixNavigationPosition = function(){
+		var st, nh, wh, top;
+
+		$window.on('scroll resize', function(){
+			nh = $navInner.height();
+			wh = $window.height();
+
+			if(wh > nh) {
+				$navInner.css('top', 0);
+				$navInner.addClass('c-fixed');
+			} else {
+				st = $window.scrollTop();
+
+				if(nh - st <= wh) {
+					$navInner.css('top', wh - nh + 'px');
+					$navInner.addClass('c-fixed');
+				} else {
+					$navInner.css('top', 0);
+					$navInner.removeClass('c-fixed');
+				}
+			}
+		});
+	};
+
+	init();
 });
 
 // Google Analytics
