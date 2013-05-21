@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<project name="adamjcox" default="prod" basedir="/d/adam/work/workspace/">
+	<description>Build file for outputting production code for adamjcox.co.uk</description>
+
+	<target name="-load.properties" description="Set build properties">
+		<property name="yui.dir" value="${basedir}/tools/"  description="" />
+	</target>
+</project>
