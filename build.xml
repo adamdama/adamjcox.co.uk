@@ -3,6 +3,9 @@
 	<description>Build file for outputting production code for adamjcox.co.uk</description>
 
 	<target name="-load.properties" description="Set build properties">
-		<property name="yui.dir" value="${basedir}/tools/"  description="" />
+		<property name="proj.dir" value="${basedir}" />
+		<property name="yui.dir" value="${basedir}/tools/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar"  description="Location of YUI Compressor" />
+		<property name="gcc.dir" value="${basedir}/tools/google-closure-compiler-latest/build/compiler.jar"  description="Location of Google Closure Compiler" />
+		<property name="src.css" value=
 	</target>
 </project>
